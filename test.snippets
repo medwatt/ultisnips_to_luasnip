@@ -1,0 +1,30 @@
+
+
+snippet bye "My mail signature"
+Good bye, Sir. Hope to talk to you soon.
+- Arthur, King of Britain
+endsnippet
+
+snippet match "Structural pattern matching" b
+match ${1:expression}:
+    case ${2:pattern_1}:
+        ${3:pass}
+    case ${4:pattern_2}:
+        ${0:pass}
+endsnippet
+
+snippet for "for loop" b
+for ${1:item} in ${2:iterable}:
+    ${3:${VISUAL:pass}}
+endsnippet
+
+snippet q
+Your age: ${1|<18,18~60,>60|}
+Your height: ${2|<120cm,120cm~180cm,>180cm|}
+endsnippet
+
+priority 300
+context "math()"
+snippet dint "definit integral" wA
+\int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} {\mathrm{d} ${4:x}}$0
+endsnippet
