@@ -85,9 +85,12 @@ class SnippetNode:
     def renumber_nodes(self):
         count = 1
         for node in self.nodes:
-            if isinstance(node, InsertNode):
+            if type(node) in [InsertNode, ChoiceNode, SnippetNode]:
                 node.index = count
                 count += 1
+            # if isinstance(node, InsertNode):
+            #     node.index = count
+            #     count += 1
 
     def correct_text_nodes(self):
         for i, node in enumerate(self.nodes):

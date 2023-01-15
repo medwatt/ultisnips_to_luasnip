@@ -11,12 +11,15 @@ def build_snippet_definition(d):
                 block.append("regTrig=true")
             if "A" in v:
                 block.append('snippetType="autosnippet"')
+    if "priority" in d.keys():
+        block.append(f'priority={d["priority"]}')
     return "\n\t{" + ", ".join(block) + "}"
 
 
 def build_snippet_content_block(d):
     nodes = d["snippet"]["snippet_content"]
     return "\t{\n\t\t" + ",\n\t\t".join([repr(node) for node in nodes]) + "\n\t}"
+
 
 def build_conditions_block(d):
     block = []
@@ -32,9 +35,9 @@ def build_snippet(text):
     d = transform_snippet(text)
 
     blocks = [
-            build_snippet_definition(d),
-            build_snippet_content_block(d),
-            build_conditions_block(d)
-            ]
+        build_snippet_definition(d),
+        build_snippet_content_block(d),
+        build_conditions_block(d),
+    ]
 
-    return "s(" + ",\n".join([block for block in blocks if len(block)>0]) + "\n),"
+    return "s(" + ",\n".join([block for block in blocks if len(block) > 0]) + "\n),"

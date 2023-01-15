@@ -1,8 +1,8 @@
 # Sample
 
-See [test.snippets](./test.snippets) for the original snippets.
-
 This tool depends on [lark](https://github.com/lark-parser/lark) for parsing. It can be installed with `pip install lark`.
+
+See [test.snippets](./test.snippets) for the original snippets.
 
 ```lua
 s(
@@ -11,7 +11,6 @@ s(
                 t({ 'Good bye, Sir. Hope to talk to you soon.', '- Arthur, King of Britain' })
         }
 ),
-
 s(
         {trig="match", dscr="Structural pattern matching"},
         {
@@ -27,9 +26,8 @@ s(
                 i(0, 'pass')
         }
 ),
-
 s(
-        {trig="cc", dscr="Capacitor", snippetType="autosnippet"},
+        {trig="cc", dscr="deep nesting", snippetType="autosnippet"},
         {
                 t('C'),
                 i(1),
@@ -39,10 +37,9 @@ s(
                 i(3, 'N-'),
                 t(' '),
                 i(4, 'value'),
-                c(5, { sn(nil, { t(' '), i(1, 'a_1'), t(' '), i(2, 'a_2') } ), t('') } )
+                c(5, { sn(nil, { t(' '), i(1, 'a_1'), t(' '), i(2, 'a_2'), c(3, { sn(nil, { t(' '), i(1, 'deep') } ), t('') } ) } ), t('') } )
         }
 ),
-
 s(
         {trig="q"},
         {
@@ -52,9 +49,8 @@ s(
                 c(2, { t('<120cm'), t('120cm~180cm'), t('>180cm') })
         }
 ),
-
 s(
-        {trig="dint", dscr="definit integral", snippetType="autosnippet"},
+        {trig="dint", dscr="definit integral", snippetType="autosnippet", priority=300},
         {
                 t('\\int_{'),
                 i(1, '-\\infty'),
