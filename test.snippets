@@ -1,5 +1,4 @@
 
-
 snippet bye "My mail signature"
 Good bye, Sir. Hope to talk to you soon.
 - Arthur, King of Britain
@@ -13,9 +12,8 @@ match ${1:expression}:
         ${0:pass}
 endsnippet
 
-snippet for "for loop" b
-for ${1:item} in ${2:iterable}:
-    ${3:${VISUAL:pass}}
+snippet cc "Capacitor" Ab
+C$1 ${2:N+} ${3:N-} ${4:value}${5: ${6:a_1} ${7:a_2}}
 endsnippet
 
 snippet q
@@ -26,5 +24,5 @@ endsnippet
 priority 300
 context "math()"
 snippet dint "definit integral" wA
-\int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} {\mathrm{d} ${4:x}}$0
+\int_{${1:-\infty}}^{${2:\infty}} ${3:integrand} {\mathrm{d} ${4:x}}
 endsnippet

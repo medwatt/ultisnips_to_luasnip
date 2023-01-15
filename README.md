@@ -1,170 +1,72 @@
 # Sample
 
-**Text only snippet**
+See [test.snippets](./test.snippets) for the original snippets.
 
-Input
+This tool depends on [lark](https://github.com/lark-parser/lark) for parsing. It can be installed with `pip install lark`.
 
-```
-snippet bye "My mail signature"
-Good bye, Sir. Hope to talk to you soon.
-- Arthur, King of Britain
-endsnippet
-```
-
-Output
-
-```
+```lua
 s(
-    {
-        trig = "bye",
-        dscr = "My mail signature",
-        regTrig = false
-    },
-    { t({ "Good bye, Sir. Hope to talk to you soon.", "- Arthur, King of Britain" }) }
-),
-```
-
-**Snippet with tab stops**
-
-Input
-
-```
-snippet match "Structural pattern matching" b
-match ${1:expression}:
-    case ${2:pattern_1}:
-        ${3:pass}
-    case ${4:pattern_2}:
-        ${0:pass}
-endsnippet
-```
-
-Output
-
-```
-    s(
+        {trig="bye", dscr="My mail signature"},
         {
-            trig = "match",
-            dscr = "Structural pattern matching"
+                t({ 'Good bye, Sir. Hope to talk to you soon.', '- Arthur, King of Britain' })
+        }
+),
+
+s(
+        {trig="match", dscr="Structural pattern matching"},
+        {
+                t('match '),
+                i(1, 'expression'),
+                t({ ':', '    case ' }),
+                i(2, 'pattern_1'),
+                t({ ':', '        ' }),
+                i(3, 'pass'),
+                t({ '', '    case ' }),
+                i(4, 'pattern_2'),
+                t({ ':', '        ' }),
+                i(0, 'pass')
+        }
+),
+
+s(
+        {trig="cc", dscr="Capacitor", snippetType="autosnippet"},
+        {
+                t('C'),
+                i(1),
+                t(' '),
+                i(2, 'N+'),
+                t(' '),
+                i(3, 'N-'),
+                t(' '),
+                i(4, 'value'),
+                c(5, { sn(nil, { t(' '), i(1, 'a_1'), t(' '), i(2, 'a_2') } ), t('') } )
+        }
+),
+
+s(
+        {trig="q"},
+        {
+                t('Your age: '),
+                c(1, { t('<18'), t('18~60'), t('>60') }),
+                t({ '', 'Your height: ' }),
+                c(2, { t('<120cm'), t('120cm~180cm'), t('>180cm') })
+        }
+),
+
+s(
+        {trig="dint", dscr="definit integral", snippetType="autosnippet"},
+        {
+                t('\\int_{'),
+                i(1, '-\\infty'),
+                t('}^{'),
+                i(2, '\\infty'),
+                t('} '),
+                i(3, 'integrand'),
+                t(' {\\mathrm{d} '),
+                i(4, 'x'),
+                t('}')
         },
-        fmta(
-            [[
-match <>:
-    case <>:
-        <>
-    case <>:
-        <>
-]]           ,
-            {
-                i(1, "expression"),
-                i(2, "pattern_1"),
-                i(3, "pass"),
-                i(4, "pattern_2"),
-                i(0, "pass")
-            }
-        )
-    ),
-```
 
-**Snippet with VISUAL**
-
-Input
-
-```
-snippet for "for loop" b
-for ${1:item} in ${2:iterable}:
-    ${3:${VISUAL:pass}}
-endsnippet
-```
-
-Output
-
-```
-s(
-    {
-        trig = "for",
-        dscr = "for loop"
-    },
-    fmta(
-        [[
-for <> in <>:
-<>
-]]           ,
-        {
-            i(1, "item"),
-            i(2, "iterable"),
-            d(3, get_visual("pass"))
-        }
-    )
-),
-```
-
-**Snippet with VISUAL**
-
-Input
-
-```
-snippet q
-Your age: ${1|<18,18~60,>60|}
-Your height: ${2|<120cm,120cm~180cm,>180cm|}$0$
-endsnippet
-```
-
-Output
-
-```
-s(
-    {
-        trig = "q",
-        regTrig = false
-    },
-    fmta(
-        [[
-Your age: $<>
-Your height: $<>
-]]           ,
-        {
-            c(1, { t("18"), t("18~60"), t(">60") }),
-            c(2, { t("120cm"), t("120cm~180cm"), t(">180cm") }),
-            i(0)
-        }
-    )
-),
-```
-
-**Snippet with coxtext and options**
-
-Input
-
-```
-priority 300
-context "math()"
-snippet dint "definit integral" wA
-\int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} {\mathrm{d} ${4:x}}$0
-endsnippet
-```
-
-Output
-
-```
-s(
-    {
-        trig = "dint",
-        dscr = "definit integral",
-        priority = 300,
-        snippetType = "autosnippet"
-    },
-    fmta(
-        [[
-\int_{<>}^{<>} <> {\mathrm{d} <>}<>
-]]           ,
-        {
-            i(1, "-\infty"),
-            i(2, "\infty"),
-            d(3, get_visual),
-            i(4, "x"),
-            i(0)
-        }
-    ),
-    { condition = math },
+        { condition = math }
 ),
 ```

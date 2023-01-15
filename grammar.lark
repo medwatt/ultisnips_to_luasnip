@@ -1,0 +1,54 @@
+ultisnips: (priority)? (context)? snippet
+
+priority: _NEWLINE "priority" _SPACE INT
+
+context: _NEWLINE "context" _SPACE ESCAPED_STRING
+
+snippet: snippet_definition snippet_content _SNIPPET_END
+
+snippet_definition: _NEWLINE "snippet" _SPACE trigger (_SPACE description)? (_SPACE options)? _NEWLINE
+
+snippet_content: (TEXT|CODE|tabstop)+
+
+_SNIPPET_END: _NEWLINE "endsnippet" (_VERTICAL_SPACE)?
+
+trigger: WORD | ESCAPED_STRING
+
+description: ESCAPED_STRING
+
+options: /[Abirw]+/
+
+tabstop: "$" INT
+       | "${" visual NEWLINE? "}"
+       | "${" INT conditional NEWLINE? "}"
+       | "${" INT ":" (TABSTOP_TEXT | CODE )* (tabstop (TABSTOP_TEXT)?)* "}"
+
+visual: "VISUAL" (":" TABSTOP_TEXT)?
+
+conditional: "|" CHOICE ("," CHOICE)+ "|"
+
+CHOICE: /(?:(?!,|\|).)+/
+
+CODE: /`(.|\n)+?`/
+
+TEXT: /(?:(?!\$[{\d]|`|\nendsnippet)(?:.|\n))+/
+
+TABSTOP_TEXT: /(?:(?!\$[{\d]|`|})(.|\n))+/
+
+_SPACE: (" "|/\t/)+
+VERTICAL_SPACE: /[ \t\f\r\n]/+
+_VERTICAL_SPACE: /[ \t\f\r\n]/+
+
+CR : /\r/
+LF : /\n/
+NEWLINE: (CR? LF)+
+_NEWLINE: (CR? LF)+
+
+
+_STRING_INNER: /.*?/
+_STRING_ESC_INNER: _STRING_INNER /(?<!\\)(\\\\)*?/
+
+ESCAPED_STRING : /([\"'])/ _STRING_ESC_INNER /\1/
+
+%import common.INT
+%import common.WORD
